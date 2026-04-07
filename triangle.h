@@ -14,5 +14,6 @@ struct Triangle {
 double distance(const Point &p1, const Point &p2);
 double heronArea(const Triangle &t);
 bool isDegenerate(const Triangle &t);
+bool isOnBoundary(const Triangle &T, const Point &P);
 
 #endif
