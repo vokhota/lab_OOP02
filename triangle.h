@@ -1,19 +1,24 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
 
+#include <iostream>
+#include <cmath>
+using namespace std;
+
 struct Point {
     double x, y;
 };
 
-struct Triangle {
+class Triangle {
+private:
     Point A, B, C;
-    double area() const;
+    double area(const Point &p1, const Point &p2, const Point &p3) const;
+
+public:
+    Triangle(Point a, Point b, Point c);
+    bool isDegenerate() const;
     bool contains(const Point &P) const;
 };
 
-double distance(const Point &p1, const Point &p2);
-double heronArea(const Triangle &t);
-bool isDegenerate(const Triangle &t);
-bool isOnBoundary(const Triangle &T, const Point &P);
-
 #endif
+

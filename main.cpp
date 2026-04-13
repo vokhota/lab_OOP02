@@ -1,43 +1,31 @@
-#include <iostream>
-#include "triangle.h"
-#include <cmath>
-using namespace std;
-
-bool containsHeron(const Triangle &t, const Point &P) {
-    Triangle t1{t.A, t.B, P};
-    Triangle t2{t.B, t.C, P};
-    Triangle t3{t.C, t.A, P};
-    double total = heronArea(t1) + heronArea(t2) + heronArea(t3);
-    return fabs(total - heronArea(t)) < 1e-5;
-}
+#include "Triangle.h"
 
 int main() {
-    Triangle t;
-    cout << "Enter triangle coordinates (x1 y1 x2 y2 x3 y3): ";
-    cin >> t.A.x >> t.A.y >> t.B.x >> t.B.y >> t.C.x >> t.C.y;
+    Point A, B, C;
+    cout << "Введіть координати трикутника (x y):\n";
+    cin >> A.x >> A.y >> B.x >> B.y >> C.x >> C.y;
 
+    Triangle t(A, B, C);
 
-    cout << "Enter points (x y), or any symbol to finish:" << endl;
-    Point p;
-    while (cin >> p.x >> p.y) {
-    
-        if (t.contains(p)) {
-            if (isOnBoundary(t, p)) {
-                cout << "[Vector] Point (" << p.x << ", " << p.y << ") is ON the border." << endl;
-            } else {
-                cout << "[Vector] Point (" << p.x << ", " << p.y << ") is INSIDE." << endl;
-            }
-        } else {
-            cout << "[Vector] Point (" << p.x << ", " << p.y << ") is OUTSIDE." << endl;
-        }
+    if (t.isDegenerate()) {
+        cout << "Трикутник вироджений (площа = 0)." << endl;
+        return 0;
+    }
 
-        if (containsHeron(t, p)) {
-            cout << "[Heron] Point (" << p.x << ", " << p.y << ") is INSIDE or ON border." << endl;
-        } else {
-            cout << "[Heron] Point (" << p.x << ", " << p.y << ") is OUTSIDE." << endl;
-        }
+    int n;
+    cout << "Скільки точок перевірити? ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        Point P;
+        cout << "Введіть точку " << i+1 << " (x y): ";
+        cin >> P.x >> P.y;
+
+        if (t.contains(P))
+            cout << "Точка належить трикутнику або його межі.\n";
+        else
+            cout << "Точка НЕ належить трикутнику.\n";
     }
 
     return 0;
 }
-
